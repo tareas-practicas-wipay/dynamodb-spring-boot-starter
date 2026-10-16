@@ -31,7 +31,7 @@ public abstract class MainTable {
      * Con gIndex2Pk pasa igual, pero aún peor (y difícil de detectar): DynamoDB no rechazaría el item al no ser una clave
      * de la tabla principal, pero no se podría consultar por gIndex2, pq no se guardaría con el nombre correcto.
      */
-    @Getter(onMethod_ = {@DynamoDbSecondaryPartitionKey(indexNames = GINDEX2), @DynamoDbAttribute("GSI2PK")})
+    @Getter(onMethod_ = {@DynamoDbSecondaryPartitionKey(indexNames = GINDEX2), @DynamoDbAttribute("gIndex2Pk")})
     private String gIndex2Pk;
 
     private String id;
