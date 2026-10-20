@@ -24,7 +24,7 @@ Después se añade como dependencia en el `pom.xml` del microservicio:
 <dependency>
     <groupId>com.wipay</groupId>
     <artifactId>wipay-dynamodb-spring-boot-starter</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -54,6 +54,29 @@ aws.dynamodb.secret-key=local
 ## Sustituir la configuración
 
 Todos los beans usan `@ConditionalOnMissingBean`. Si un microservicio necesita otro `DynamoDbClient` (por ejemplo, con otras credenciales), basta con declarar su propio `@Bean` y el del starter deja de crearse.
+
+## MainTable
+
+Clase base de todas las entidades. Define los atributos comunes y las claves de la tabla y de sus índices:
+
+| Atributo | Rol |
+|---|---|
+| `PK` | Partition key de la tabla |
+| `SK` | Sort key de la tabla y de los índices `gIndex2` y `gIndex3` |
+| `gIndex2Pk` | Partition key de `gIndex2` |
+| `gIndex3Pk` | Partition key de `gIndex3` |
+| `id`, `status`, `createdDate` | Atributos comunes |
+
+Los nombres de los índices están en las constantes `MainTable.GINDEX2` y `MainTable.GINDEX3`.
+
+Los nombres de los atributos deben coincidir exactamente con los de `create-tables.sh` en [infraestructure](https://github.com/tareas-practicas-wipay/infraestructure). Si no coinciden, DynamoDB no da ningún error, pero los ítems no aparecen en el índice.
+
+## Versiones
+
+| Versión | Cambios |
+|---|---|
+| `0.2.0-SNAPSHOT` | Añade `gIndex3Pk` y el índice `gIndex3` |
+| `0.1.0-SNAPSHOT` | Versión inicial |
 
 ## Requisitos
 
