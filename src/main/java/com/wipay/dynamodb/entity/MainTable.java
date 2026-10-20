@@ -12,7 +12,8 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 public abstract class MainTable {
-    public static final String GINDEX2 = "gIndex2"; // creo la constante porque la voy a usar en varios sitios.
+    public static final String GINDEX2 = "gIndex2"; // los creo como constantes porque los voy a usar en varios sitios.
+    public static final String GINDEX3 = "gIndex3";
 
     /*
      * las anotaciones van en el getter, pero Lombok genera los getters
@@ -24,7 +25,7 @@ public abstract class MainTable {
     @Getter(onMethod_ = {@DynamoDbPartitionKey, @DynamoDbAttribute("PK")})
     private String pk;
 
-    @Getter(onMethod_ = {@DynamoDbSortKey, @DynamoDbSecondarySortKey(indexNames = GINDEX2), @DynamoDbAttribute("SK")})
+    @Getter(onMethod_ = {@DynamoDbSortKey, @DynamoDbSecondarySortKey(indexNames = {GINDEX2, GINDEX3}), @DynamoDbAttribute("SK")})
     private String sk;
 
     /*
@@ -33,6 +34,9 @@ public abstract class MainTable {
      */
     @Getter(onMethod_ = {@DynamoDbSecondaryPartitionKey(indexNames = GINDEX2), @DynamoDbAttribute("gIndex2Pk")})
     private String gIndex2Pk;
+
+    @Getter(onMethod_ = {@DynamoDbSecondaryPartitionKey(indexNames = GINDEX3), @DynamoDbAttribute("gIndex3Pk")})
+    private String gIndex3Pk;
 
     private String id;
     private String status;
